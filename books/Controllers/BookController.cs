@@ -1,5 +1,6 @@
 using books.Entities.Models;
 using books.Entities.ViewModels;
+using books.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace books.Controllers
@@ -9,36 +10,37 @@ namespace books.Controllers
     public class BookController : ControllerBase
     {
         private readonly ILogger<BookController> _logger;
-
-        public BookController(ILogger<BookController> logger)
+        private readonly IBookService _bookService;
+        public BookController(ILogger<BookController> logger, IBookService bookService)
         {
             _logger = logger;
+            _bookService = bookService;
         }
 
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
-            return Ok(new Book(){ Id = 123 });
+            return Ok(_bookService.GetAll());
         }
         [HttpGet("GetbyId")]
-        public IActionResult Get(int id)
+        public IActionResult GetbyId(int id)
         {
-            return Ok(new Book() { Id = id });
+            return Ok(_bookService.GetbyId(id));
         }
         [HttpPost("Create")]
         public IActionResult Create([FromBody] BookVM book)
         {
-            return Ok("Create");
+            return Ok(_bookService.Create(book));
         }
         [HttpPut("Update")]
         public IActionResult Update([FromBody] BookVM book)
         {
-            return Ok("Update");
+            return Ok(_bookService.Update(book));
         }
         [HttpPut("Delete")]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return Ok("Delete");
+            return Ok(_bookService.Delete(id));
         }
     }
 }
