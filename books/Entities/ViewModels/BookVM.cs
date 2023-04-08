@@ -4,6 +4,7 @@ namespace books.Entities.ViewModels
 {
     public class BookVM
     {
+        public BookVM() { }
         public BookVM(Book book) 
         { 
             Id = book.Id; 

@@ -51,7 +51,7 @@ namespace books.Services
 
             _bookContext.SaveChanges(); 
 
-            return book.Id;
+            return newBook.Id;
         }
         public int Update(BookVM book)
         {
@@ -69,7 +69,7 @@ namespace books.Services
 
             _bookContext.SaveChanges();
 
-            return book.Id;
+            return bookDB.Id;
         }
         public int Delete(int id)
         {
@@ -84,7 +84,7 @@ namespace books.Services
 
             _bookContext.SaveChanges();
 
-            return id;
+            return bookDB.Id;
         }
     }
 }
