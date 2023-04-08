@@ -1,12 +1,14 @@
 using books.Entities.Models;
 using books.Entities.ViewModels;
 using books.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace books.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("_allowAllOrigins")]
     public class BookController : ControllerBase
     {
         private readonly ILogger<BookController> _logger;
