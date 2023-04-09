@@ -2,9 +2,10 @@
 
 namespace books.Entities.Models
 {
-    public class ReadingList
+    public class Genre
     {
         public int Id { get; set; }
-        public ICollection<Book> Books { get; set; }
+        public string GenreName { get; set; }
+        public bool IsActive { get; set; }
     }
 }

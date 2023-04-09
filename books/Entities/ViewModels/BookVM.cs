@@ -15,13 +15,17 @@ namespace books.Entities.ViewModels
                         ? $"{book.Author.FirstName} {book.Author.MiddleName} {book.Author.SecondName}" 
                         : $"{book.Author.FirstName} {book.Author.SecondName}";
             ReadingStatus = book.ReadingStatus;
+            GenreId= book.GenreId;
+            GenreName = book.Genre.GenreName;
             IsActive = book.IsActive;
         }
         public int Id { get; set; }
         public string Title { get; set; }
-        public int ISBN { get; set; }
+        public string ISBN { get; set; }
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }
+        public int GenreId { get; set; }
+        public string GenreName { get; set; }
         public int ReadingStatus { get; set; }
         public bool IsActive { get; set; }
     }

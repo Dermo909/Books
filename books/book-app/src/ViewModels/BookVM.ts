@@ -6,5 +6,7 @@ export interface BookVM {
     authorId: number;
     authorName: string;
     readingStatus: number;
+    genreId: number;
+    genreName: string;
     isActive: boolean;
 }

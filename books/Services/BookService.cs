@@ -1,6 +1,7 @@
 ﻿using books.Data;
 using books.Entities.Models;
 using books.Entities.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace books.Services
 {
@@ -23,7 +24,10 @@ namespace books.Services
 
         public List<BookVM> GetAll()
         {
-            var books = _bookContext.Books.Select(x => new BookVM(x)).ToList(); 
+            var books = _bookContext.Books
+                            .Include(x => x.Author)
+                            .Include(x => x.Genre)
+                            .Select(x => new BookVM(x)).ToList(); 
             return books;
         }
         public BookVM GetbyId(int id)
