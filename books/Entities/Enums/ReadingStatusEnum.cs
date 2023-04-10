@@ -3,7 +3,7 @@
     public enum ReadingStatusEnum
     {
         Unread = 0,
-        InProgress = 1,
-        Finished = 2
+        InProgress = 50,
+        Finished = 100
     }
 }

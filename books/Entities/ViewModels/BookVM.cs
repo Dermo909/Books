@@ -14,7 +14,6 @@ namespace books.Entities.ViewModels
             AuthorName = !string.IsNullOrEmpty(book.Author.MiddleName) 
                         ? $"{book.Author.FirstName} {book.Author.MiddleName} {book.Author.SecondName}" 
                         : $"{book.Author.FirstName} {book.Author.SecondName}";
-            ReadingStatus = book.ReadingStatus;
             GenreId= book.GenreId;
             GenreName = book.Genre.GenreName;
             IsActive = book.IsActive;
@@ -26,7 +25,6 @@ namespace books.Entities.ViewModels
         public string AuthorName { get; set; }
         public int GenreId { get; set; }
         public string GenreName { get; set; }
-        public int ReadingStatus { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace books.Services
             var books = _bookContext.Books
                             .Include(x => x.Author)
                             .Include(x => x.Genre)
+                            .Where(x => x.IsActive == true)
                             .Select(x => new BookVM(x)).ToList(); 
             return books;
         }
@@ -48,7 +49,6 @@ namespace books.Services
                 Title = book.Title,
                 ISBN = book.ISBN,
                 AuthorId = book.AuthorId,
-                ReadingStatus = book.ReadingStatus,
                 IsActive = true
             };
             _bookContext.Books.Add(newBook);
@@ -69,7 +69,6 @@ namespace books.Services
             bookDB.ISBN = book.ISBN;
             bookDB.Title = book.Title;
             bookDB.AuthorId = book.AuthorId;
-            bookDB.ReadingStatus = book.ReadingStatus;
 
             _bookContext.SaveChanges();
 

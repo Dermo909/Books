@@ -39,7 +39,7 @@ namespace books.Controllers
         {
             return Ok(_bookService.Update(book));
         }
-        [HttpPut("Delete")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             return Ok(_bookService.Delete(id));
