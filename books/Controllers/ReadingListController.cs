@@ -11,9 +11,9 @@ namespace books.Controllers
     [EnableCors("_allowAllOrigins")]
     public class ReadingListController : ControllerBase
     {
-        private readonly ILogger<BookController> _logger;
+        private readonly ILogger<ReadingListController> _logger;
         private readonly IReadingListService _readingListService;
-        public ReadingListController(ILogger<BookController> logger, IReadingListService readingListService)
+        public ReadingListController(ILogger<ReadingListController> logger, IReadingListService readingListService)
         {
             _logger = logger;
             _readingListService = readingListService;

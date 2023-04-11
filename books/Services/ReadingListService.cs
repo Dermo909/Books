@@ -63,6 +63,7 @@ namespace books.Services
                 throw new Exception($"Reading list item with id {book.Id} not found");
             }
 
+            readingListDB.BookId = book.BookId;
             readingListDB.ReadingStatus = book.ReadingStatus;
             readingListDB.IsActive= book.IsActive;
 
