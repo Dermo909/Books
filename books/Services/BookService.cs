@@ -48,6 +48,7 @@ namespace books.Services
             {
                 Title = book.Title,
                 ISBN = book.ISBN,
+                GenreId = book.GenreId,
                 AuthorId = book.AuthorId,
                 IsActive = true
             };
