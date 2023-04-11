@@ -25,7 +25,7 @@ namespace BookTest
         public void Setup()
         {
             var _contextOptions = new DbContextOptionsBuilder<BookContext>()
-            .UseInMemoryDatabase("BooksTest")
+            .UseInMemoryDatabase("BookServiceTest")
             .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
             .Options;
 
