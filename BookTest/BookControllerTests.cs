@@ -1,19 +1,18 @@
-using books.Controllers;
+﻿using books.Controllers;
 using books.Data;
 using books.Entities.Models;
 using books.Entities.ViewModels;
 using books.Services;
-using BookTest.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BookTest
 {
     [TestClass]
-    public class BookTests
+    public class BookControllerTests
     {
         private IBookService _bookService;
         private IAuthorService _authorService;
@@ -104,9 +103,15 @@ namespace BookTest
                 }
                 );
 
-            _bookService.Create(newBook);
+            _bookController.Create(newBook);
 
-            var book = _bookService.GetbyId(3);
+            var result = _bookController.GetbyId(3);
+            Assert.IsNotNull(result);
+
+            var okResult = result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+
+            var book = okResult.Value as BookVM;
             Assert.IsNotNull(book);
             Assert.AreEqual(book.Id, 3);
             Assert.AreEqual(book.AuthorId, 1);
@@ -118,7 +123,15 @@ namespace BookTest
         [TestMethod]
         public void Read()
         {
-            var books = _bookService.GetAll();
+            var result = _bookController.GetAll();
+
+            Assert.IsNotNull(result);
+
+            var okResult = result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            var books = okResult.Value as List<BookVM>;
+            Assert.IsNotNull(books);
+            Assert.AreEqual(books.Count(), 2);
 
             var book1 = books.FirstOrDefault(x => x.Id == 1);
             var book2 = books.FirstOrDefault(x => x.Id == 2);
@@ -140,10 +153,17 @@ namespace BookTest
             Assert.AreEqual(book2.ISBN, "67890");
             Assert.IsTrue(book2.IsActive);
         }
+
         [TestMethod]
         public void Update()
         {
-            var book = _bookService.GetbyId(1);
+            var result = _bookController.GetbyId(1);
+            Assert.IsNotNull(result);
+
+            var okResult = result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+
+            var book = okResult.Value as BookVM;
             Assert.IsNotNull(book);
             Assert.AreEqual(book.Id, 1);
             Assert.AreEqual(book.AuthorId, 1);
@@ -156,28 +176,74 @@ namespace BookTest
             book.Title = "Tommyknockers";
             book.ISBN = "XYZ";
 
-            var bookId = _bookService.Update(book);
+            var resultbookId = _bookController.Update(book);
+            Assert.IsNotNull(resultbookId);
+
+            var okResult2 = resultbookId as OkObjectResult;
+            Assert.IsNotNull(okResult2);
+
+            var bookId = okResult2.Value;
             Assert.AreEqual(bookId, 1);
 
-            var updatedBook = _bookService.GetbyId(1);
+            var updatedResult = _bookController.GetbyId(1);
+            Assert.IsNotNull(updatedResult);
+
+            var updateOkResult = result as OkObjectResult;
+            Assert.IsNotNull(updateOkResult);
+
+            var updatedBook = okResult.Value as BookVM;
             Assert.IsNotNull(updatedBook);
             Assert.AreEqual(updatedBook.Id, 1);
             Assert.AreEqual(updatedBook.AuthorId, 2);
-            Assert.AreEqual(updatedBook.GenreId, 3);
+            Assert.AreEqual(updatedBook.GenreId, 2);
             Assert.AreEqual(updatedBook.Title, "Tommyknockers");
             Assert.AreEqual(updatedBook.ISBN, "XYZ");
         }
         [TestMethod]
         public void Delete()
         {
-            var book = _bookService.GetbyId(1);
+            var result = _bookController.GetbyId(1);
+            Assert.IsNotNull(result);
+
+            var okResult = result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+
+            var book = okResult.Value as BookVM;
+            Assert.IsNotNull(book);
             Assert.IsTrue(book.IsActive);
 
-            var bookId = _bookService.Delete(book.Id);
+            var resultBookId = _bookController.Delete(book.Id);
+            Assert.IsNotNull(resultBookId);
+
+            var okResult2 = resultBookId as OkObjectResult;
+            Assert.IsNotNull(okResult2);
+
+            var bookId = okResult2.Value;
             Assert.AreEqual(bookId, 1);
 
-            var updatedBook = _bookService.GetbyId(1);
+            var updatedBookResult = _bookController.GetbyId(1);
+            Assert.IsNotNull(updatedBookResult);
+
+            var okResult3 = updatedBookResult as OkObjectResult;
+            Assert.IsNotNull(okResult);
+
+            var updatedBook = okResult3.Value as BookVM;
             Assert.IsFalse(updatedBook.IsActive);
+        }
+
+
+        [TestMethod]
+        public void BookControllerRead()
+        {
+            var result = _bookController.GetAll();
+
+            Assert.IsNotNull(result);
+
+            var okResult = result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            var books = okResult.Value as List<BookVM>;
+            Assert.IsNotNull(books);
+            Assert.AreEqual(books.Count(), 2);
         }
     }
 }
