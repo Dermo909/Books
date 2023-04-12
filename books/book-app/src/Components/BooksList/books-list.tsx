@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { bookService } from "../../Services/book-service";
 import { BookVM } from "../../ViewModels/BookVM";
-import { Grid, List, ListItem, ListItemText } from '@mui/material';
+import { Fab, Grid } from '@mui/material';
 import { BookListItem } from "./book-list-item";
 import { authorService } from "../../Services/author-service";
 import { AuthorVM } from "../../ViewModels/AuthorVM";
 import { genreService } from "../../Services/genre-service";
 import { GenreVM } from "../../ViewModels/GenreVM";
+import { FaPlus } from "react-icons/fa";
 
 export function BooksList() {
     const [bookData, setBookData] = useState<Array<BookVM>>([]);
@@ -57,28 +58,38 @@ export function BooksList() {
                 });
     }
 
-    function emitOnDelete() {
+    function emitOnChange() {
         fetchData();
     }
 
     return (
         <>
-            {bookData && bookData.length > 0 && !isLoading && 
+            {bookData && bookData.length > 0 && !isLoading &&
                 <>
-                    <Grid container>
+                    <Grid container style={{ paddingTop: "16px" }}>
                         {bookData.map(book => <BookListItem book={book}
                             authors={authorData}
                             genres={genreData}
-                            emitOnDelete={emitOnDelete}
+                            emitOnChange={emitOnChange}
                             key={book.id} />)}
                     </Grid>
                 </>
             }
-            
-            {(!bookData || bookData.length === 0) && !isLoading && 
+
+            {(!bookData || bookData.length === 0) && !isLoading &&
                 <Grid container>
                     <Grid item>No Books!</Grid>
                 </Grid>
             }
+            <Fab
+                color="primary"
+                sx={{
+                    position: 'absolute',
+                    bottom: (theme) => theme.spacing(12),
+                    right: (theme) => theme.spacing(6),
+                }}
+            >
+                <FaPlus />
+            </Fab>
         </>);
 }

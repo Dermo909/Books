@@ -23,7 +23,7 @@ export function BottomNav() {
                     onChange={(e, value) => {setValue(value);}}
                 >
                     <BottomNavigationAction label="Books" onClick={(e) => goTo('bookslist')} icon={<BsBook />} />
-                    <BottomNavigationAction label="ReadingList" onClick={(e) => goTo('readinglist')} icon={<BsHeart />} />
+                    {/* <BottomNavigationAction label="ReadingList" onClick={(e) => goTo('readinglist')} icon={<BsHeart />} /> */}
                 </BottomNavigation>
             </Paper>
         </>);

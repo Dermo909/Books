@@ -1,4 +1,4 @@
-import { Button, Collapse, Grid, TextField } from "@mui/material";
+import { Alert, Button, Collapse, Grid, TextField } from "@mui/material";
 import { FaBook, FaEdit, FaHatWizard, FaHiking, FaRegSave, FaRegWindowClose, FaRocket, FaTrashAlt } from 'react-icons/fa';
 import { BookVM } from "../../ViewModels/BookVM";
 import { useEffect, useState } from "react";
@@ -7,14 +7,15 @@ import { AuthorVM } from "../../ViewModels/AuthorVM";
 import { GenreVM } from "../../ViewModels/GenreVM";
 import { bookService } from "../../Services/book-service";
 
-export function BookListItem(params: { 
-    book: BookVM, 
-    authors: Array<AuthorVM>, 
+export function BookListItem(params: {
+    book: BookVM,
+    authors: Array<AuthorVM>,
     genres: Array<GenreVM>,
-    emitOnDelete: () => void  }) 
-    {
+    emitOnChange: () => void
+}) {
     const [icon, setIcon] = useState(<FaBook />);
     const [isEdit, setIsEdit] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
 
     useEffect(() => {
         setGenreIcon(params.book.genreName);
@@ -33,72 +34,60 @@ export function BookListItem(params: {
 
     function bookDelete() {
         return bookService
-        .disable(params.book.id)
-        .then((json: any) => {
-            params.emitOnDelete();
-        },
-            (e) => {
-                console.log('Error');
-            });
+            .disable(params.book.id)
+            .then((json: any) => {
+                params.emitOnChange();
+            },
+                (e) => {
+                    console.log('Error');
+                });
     }
 
     function saveEdit() {
         return bookService
-        .put(params.book)
-        .then((json: any) => {
-            params.emitOnDelete();
-        },
-            (e) => {
-                console.log('Error');
-            });
+            .put(params.book)
+            .then((json: any) => {
+                params.emitOnChange();
+            },
+                (e) => {
+                    console.log('Error');
+                });
     }
 
     return (
         <>
-            {isEdit === false &&
+            <>
+                <Grid item xs={1} style={{ paddingLeft: "14px" }}>{icon}</Grid>
+                <Grid item xs={5}>{params.book.title}</Grid>
+                <Grid item xs={3}>({params.book.authorName})</Grid>
+                <Grid item xs={1}>
+                    <Button
+                        fullWidth
+                        disableElevation
+                        onClick={(e) => setIsEdit(true)}
+                    >
+                        <FaEdit style={{ color: "#32a852", height: "20px", width: "20px" }}/>
+                    </Button>
+                </Grid>
+                <Grid item xs={2}>
+                    <Button
+                        fullWidth
+                        disableElevation
+                        onClick={(e) => setIsDelete(true)}
+                    >
+                        <FaTrashAlt  style={{ color: "#f55142", height: "20px", width: "20px" }}/>
+                    </Button>
+                </Grid>
+            </>
+            {isEdit === true &&
                 <>
-                    <Grid item xs={1}>{icon}</Grid>
-                    <Grid item xs={5}>{params.book.title}</Grid>
-                    <Grid item xs={4}>({params.book.authorName})</Grid>
-                    <Grid item xs={1}>
-                        <Button
-                            fullWidth
-                            disableElevation
-                            onClick={(e) => setIsEdit(true)}
-                        >
-                            <FaEdit />
-                        </Button>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <Button
-                            fullWidth
-                            disableElevation
-                            onClick={bookDelete}
-                        >
-                            <FaTrashAlt />
-                        </Button>
-                    </Grid>
+                    <Grid item xs={12}><Alert severity="info" onClick={(e) => setIsEdit(false)}>Editing!</Alert></Grid>
                 </>
             }
-            {isEdit &&
-                <Collapse in={isEdit}>
-                    <Grid item xs={5}>
-                        <TextField id="book-title" label="Book Title" variant="filled" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField id="book-author" label="Book Author" variant="filled" />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField id="book-genre" label="Book Genre" variant="filled" />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FaRegSave onClick={saveEdit}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FaRegWindowClose onClick={(e) => setIsEdit(false)}/>
-                    </Grid>
-                </Collapse>
-
+            {isDelete === true &&
+                <>
+                    <Grid item xs={12}><Alert severity="info" onClick={(e) => setIsDelete(false)}>Deleting!</Alert></Grid>
+                </>
             }
         </>
     );

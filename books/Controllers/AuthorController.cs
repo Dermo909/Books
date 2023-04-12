@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace books.Controllers
 {
+    /// <summary>
+    /// Controller to allow access to AuthorService methods
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     [EnableCors("_allowAllOrigins")]
@@ -16,7 +19,10 @@ namespace books.Controllers
             _logger = logger;
             _authorService = authorService;
         }
-
+        /// <summary>
+        /// Get all Authors
+        /// </summary>
+        /// <returns>List of Authors</returns>
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {

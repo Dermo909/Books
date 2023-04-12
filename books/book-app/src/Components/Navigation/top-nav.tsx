@@ -6,7 +6,6 @@ export function TopNav() {
     <>
     <AppBar position="static">
         <Toolbar sx={{ marginLeft: "auto", marginRight: "0px!important" }}>
-            <BsPlus style={{ fontSize: "2rem" }}/>
         </Toolbar>
     </AppBar>
     </>);

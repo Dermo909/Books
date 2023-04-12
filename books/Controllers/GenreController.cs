@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace books.Controllers
 {
+    /// <summary>
+    /// Controller to allow access to GenreService methods
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     [EnableCors("_allowAllOrigins")]
@@ -17,6 +20,10 @@ namespace books.Controllers
             _genreService = genreService;
         }
 
+        /// <summary>
+        /// Get all Genres
+        /// </summary>
+        /// <returns>List of GenreVM</returns>
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
