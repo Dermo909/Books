@@ -8,7 +8,11 @@ Database connections and querying are via EntityFrameWorkCore with a Code First 
 
 React web app is limited to showing a list of books with placeholder icons for edit, delete and addition of a new record.
 
-## How to run
+## Azure hosting
+The web app is hosted on Azure at this [location](https://books-app-dg.azurewebsites.net).
+
+
+## How to run locally
 ### API
 Download and open the solution file in Visual Studio. Build all and run
 
